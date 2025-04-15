@@ -1,0 +1,21 @@
+# Virtual Environment
+venv/
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Output files
+*.xlsx
+~$*.xlsx
+
+# Executables
+*.exe
+
+# Environment settings
+.env
+
+# Build artifacts
+build/
+dist/
+*.spec
