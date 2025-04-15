@@ -1,50 +1,42 @@
-# 🤖 Shopee Voucher Automation Bot
+# 📦 Shopee Voucher Bot (LINE Integration)
 
-ระบบนี้ช่วยให้คุณสามารถ **เก็บคูปอง Shopee อัตโนมัติ** และรับรายงานผลผ่าน LINE Bot พร้อมแสดงผลในรูปแบบกราฟ
-
----
-
-## 📌 ฟีเจอร์หลัก
-
-- ✅ เก็บคูปอง Shopee ที่ยังไม่ได้เก็บ (เฉพาะหน้า [All Vouchers](https://shopee.co.th/m/avc-fsv-all-vouchers))
-- ✅ สรุปรายงานคูปองใหม่ที่เก็บในรูปแบบ **Excel**
-- ✅ แสดงผลสรุปคูปองในรูปแบบ **กราฟภาพ**
-- ✅ เชื่อมต่อ **LINE Bot** เพื่อสั่งงานและรับรายงานได้
-- ✅ รองรับหลายบัญชี (ในอนาคต รองรับหลาย Chrome Profile)
+โปรเจกต์นี้ช่วยให้คุณสามารถ **เก็บคูปอง Shopee อัตโนมัติ** ผ่าน LINE Bot ได้ทันที  
+โดยไม่ต้องเปิดเบราว์เซอร์ด้วยตัวเอง ✨
 
 ---
 
-## 🚀 วิธีเริ่มต้นใช้งาน
+## ✅ คุณสมบัติ (Features)
 
+- 🧠 เก็บเฉพาะคูปองที่ยังไม่เคยกด (ดูจากปุ่ม “เก็บ”)
+- 📊 สรุปรายงานคูปองแบบกราฟ ส่งกลับทาง LINE
+- 🔐 เก็บ Token และ Secret แบบปลอดภัยใน `.env`
+- 🌐 รองรับการใช้งานผ่าน ngrok / localhost
+
+---
+
+## 🛠️ วิธีใช้งาน
+
+1. **ตั้งค่า Line Developer**
+   - สร้าง Channel ใหม่ → เปิด Webhook → ตั้งค่า ngrok URL `/callback`
+
+2. **แก้ไขไฟล์ `.env`**
+```env
+LINE_CHANNEL_ACCESS_TOKEN=YOUR_ACCESS_TOKEN
+LINE_CHANNEL_SECRET=YOUR_CHANNEL_SECRET
+NGROK_BASE_URL=https://xxxxx.ngrok-free.app
+```
+
+3. **ติดตั้ง dependencies**
 ```bash
-git clone https://github.com/your-username/web_automation_bot.git
-cd web_automation_bot
-python -m venv venv
-venv\Scripts\activate
 pip install -r requirements.txt
+```
+
+4. **รัน Flask (LINE webhook)**
+```bash
 python app_final.py
 ```
 
-> 🧪 ก่อนใช้งาน: ให้เปิด Chrome โปรไฟล์ของคุณ และ Login Shopee ค้างไว้
-
----
-
-## 🤖 คำสั่งผ่าน LINE Bot
-
-| คำสั่ง LINE | ผลลัพธ์ |
-|-------------|----------|
-| `เก็บโค้ด` หรือ `เก็บคูปอง` | Bot จะเข้า Shopee → เก็บคูปอง → ส่งกราฟรายงานผ่าน LINE |
-| คำอื่น ๆ | Bot จะตอบกลับข้อความปกติ |
-
----
-
-## 🧠 โฟลว์ระบบ
-
-1. ผู้ใช้พิมพ์คำสั่งใน LINE
-2. Flask app รับ Webhook → เรียกใช้ `main.py`
-3. ระบบใช้ Selenium ดึงคูปองใหม่ พร้อมคลิกปุ่ม "เก็บ"
-4. บันทึกข้อมูลลง Excel และสร้างกราฟด้วย Matplotlib
-5. Bot ส่งรูปกราฟกลับไปยังผู้ใช้
+5. **รันผ่าน LINE → พิมพ์ว่า**: `เก็บคูปอง`
 
 ---
 
@@ -52,21 +44,23 @@ python app_final.py
 
 ```
 web_automation_bot/
-│
-├── main.py              # ดึงคูปอง Shopee + บันทึก Excel
-├── app_final.py         # Flask + LINE Bot integration
-├── requirements.txt     # Python dependencies
-├── data/                # ไฟล์ CSV / Excel ที่สร้าง
-├── utils.py             # ฟังก์ชันช่วยสร้างกราฟ
+├── main.py                # ดึงคูปอง Shopee และบันทึกเป็นไฟล์ + กราฟ
+├── app_final.py           # LINE Bot webhook สำหรับตอบกลับ
+├── .env                   # LINE Secret (ไม่ควรแชร์)
+├── static/                # เก็บภาพสรุปกราฟเพื่อส่งกลับ
+├── data/                  # เก็บไฟล์ CSV
+├── utils.py               # ฟังก์ชันช่วยจัดการกราฟ
+├── requirements.txt
 └── README.md
 ```
 
 ---
 
-## 📝 License
+## 💡 แรงบันดาลใจ
 
-This project is licensed under the MIT License.
+"เริ่มจากการเก็บคูปอง Shopee ทุกวัน จนอยากให้ระบบทำแทน"  
+จึงเกิดไอเดียพัฒนา Automation Bot + LINE สำหรับใช้งานง่ายขึ้น
 
 ---
 
-## 🧊 อัปเดตล่าสุด: 2025-04-15
+พัฒนาโดย ❤️: [@Sekcho](https://github.com/sekcho)
