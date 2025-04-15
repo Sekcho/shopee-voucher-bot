@@ -1,15 +1,20 @@
-from flask import Flask, request, abort, send_file
+import os
+from dotenv import load_dotenv
+from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
 import subprocess
-import os
 import glob
+
+# โหลดตัวแปรจาก .env
+load_dotenv()
 
 app = Flask(__name__)
 
-LINE_CHANNEL_ACCESS_TOKEN = "WksHN32x84DmuXepOaZmqLELO7Th4KFadwl2mtW/rWVScYdUmtAEodvzp9I3oYXLRnFgVqAA5A2v9PW6/bo6dEzS0gTWen8yjRc2v4/emTzZAJURaLTcG8pPgVhrmgilqnUxYneWOsFrGUqToDwpCwdB04t89/1O/w1cDnyilFU="
-LINE_CHANNEL_SECRET = "b4aded1a4210a0024f2da1c362d6457f"
+# ดึงค่าจาก .env
+LINE_CHANNEL_ACCESS_TOKEN = os.getenv("LINE_CHANNEL_ACCESS_TOKEN")
+LINE_CHANNEL_SECRET = os.getenv("LINE_CHANNEL_SECRET")
 
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
@@ -67,8 +72,7 @@ def run_script_and_get_image():
 
 def upload_to_static_and_get_url(file_path):
     """จำลองการส่งไฟล์ผ่าน LINE ด้วย URL แบบ localhost/ngrok"""
-    # หากใช้ ngrok:
-    ngrok_base = "https://your-ngrok-url.ngrok-free.app/static"
+    ngrok_base = "https://your-ngrok-url.ngrok-free.app/static"  # เปลี่ยนตรงนี้ถ้ามี ngrok URL จริง
     static_dir = os.path.join(os.getcwd(), "static")
     os.makedirs(static_dir, exist_ok=True)
 
